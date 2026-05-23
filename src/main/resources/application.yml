@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ep-nameless-frog-alrgkh7o-pooler.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require
+    username: neondb_owner
+    password: npg_a9UsizP1cOtd
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 2
+      minimum-idle: 1
+      idle-timeout: 10000
+      max-lifetime: 20000
+      connection-timeout: 30000
+      validation-timeout: 5000
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp:
+          use_jdbc_metadata_defaults: false
+        boot:
+          allow_jdbc_metadata_access: false
+        connection:
+          handling_mode: DELAYED_ACQUISITION_AND_RELEASE_AFTER_TRANSACTION
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.myfitness: DEBUG
+    org.springframework.security: INFO
+    com.zaxxer.hikari: ERROR
