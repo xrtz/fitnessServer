@@ -1,5 +1,25 @@
 package com.example.myfitness.dto
 
+data class RegisterRequest(
+    val name     : String,
+    val email    : String,
+    val password : String,
+    val gender   : Int    = 0,
+    val weight   : Float  = 0f,
+    val height   : Float  = 0f,
+    val target   : String = ""
+)
+
+data class LoginRequest(
+    val email    : String,
+    val password : String
+)
+
+data class AuthResponse(
+    val token : String,
+    val user  : UserResponse
+)
+
 data class UserRequest(
     val name   : String,
     val gender : Int,

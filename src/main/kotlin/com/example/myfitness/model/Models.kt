@@ -25,7 +25,10 @@ data class User(
     var height: Float = 0f,
 
     @Column
-    var target: String = ""
+    var target: String = "",
+
+    @Column(name = "password_hash")
+    var passwordHash: String = ""
 )
 
 

@@ -28,6 +28,11 @@ spring:
         connection:
           handling_mode: DELAYED_ACQUISITION_AND_RELEASE_AFTER_TRANSACTION
 
+app:
+  jwt:
+    secret: myfitness-jwt-secret-key-change-this-in-production-min32chars
+    expiration-ms: 2592000000  # 30 days
+
 server:
   port: 8080
 
