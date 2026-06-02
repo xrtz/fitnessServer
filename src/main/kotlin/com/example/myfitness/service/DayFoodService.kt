@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class DayFoodService(
-    private val dayFoodRepository  : DayFoodRepository,
-    private val foodItemRepository : FoodItemRepository
+    private val dayFoodRepository: DayFoodRepository,
+    private val foodItemRepository: FoodItemRepository
 ) {
 
     fun getDay(uid: String, date: Int): DayFoodResponse {
@@ -31,9 +31,9 @@ class DayFoodService(
             val day = dayFoodRepository.findByFirebaseUidAndDate(uid, request.date)
                 ?: DayFood(firebaseUid = uid, date = request.date)
 
-            day.calories      = request.calories
-            day.protein       = request.protein
-            day.fats          = request.fats
+            day.calories = request.calories
+            day.protein = request.protein
+            day.fats = request.fats
             day.carbohydrates = request.carbohydrates
 
             val savedDay = dayFoodRepository.save(day)
@@ -42,13 +42,13 @@ class DayFoodService(
 
             val newItems = request.foodItems.map { dto ->
                 FoodItem(
-                    dayFood       = savedDay,
-                    name          = dto.name,
-                    weight        = dto.weight,
-                    calories      = dto.calories,
-                    typeOfMeal    = dto.typeOfMeal,
-                    protein       = dto.protein,
-                    fats          = dto.fats,
+                    dayFood = savedDay,
+                    name = dto.name,
+                    weight = dto.weight,
+                    calories = dto.calories,
+                    typeOfMeal = dto.typeOfMeal,
+                    protein = dto.protein,
+                    fats = dto.fats,
                     carbohydrates = dto.carbohydrates
                 )
             }
@@ -61,27 +61,27 @@ class DayFoodService(
     private fun DayFood.toResponse(): DayFoodResponse {
         val items = foodItemRepository.findAllByDayFoodId(id)
         return DayFoodResponse(
-            id            = id,
-            date          = date,
-            calories      = calories,
-            protein       = protein,
-            fats          = fats,
+            id = id,
+            date = date,
+            calories = calories,
+            protein = protein,
+            fats = fats,
             carbohydrates = carbohydrates,
-            breakfast     = items.filter { it.typeOfMeal == "breakfast" }.map { it.toDto() },
-            lunch         = items.filter { it.typeOfMeal == "lunch"     }.map { it.toDto() },
-            dinner        = items.filter { it.typeOfMeal == "dinner"    }.map { it.toDto() },
-            snacks        = items.filter { it.typeOfMeal == "snacks"    }.map { it.toDto() }
+            breakfast = items.filter { it.typeOfMeal == "breakfast" }.map { it.toDto() },
+            lunch = items.filter { it.typeOfMeal == "lunch" }.map { it.toDto() },
+            dinner = items.filter { it.typeOfMeal == "dinner" }.map { it.toDto() },
+            snacks = items.filter { it.typeOfMeal == "snacks" }.map { it.toDto() }
         )
     }
 
     private fun FoodItem.toDto() = FoodItemDto(
-        id            = id,
-        name          = name,
-        weight        = weight,
-        calories      = calories,
-        typeOfMeal    = typeOfMeal,
-        protein       = protein,
-        fats          = fats,
+        id = id,
+        name = name,
+        weight = weight,
+        calories = calories,
+        typeOfMeal = typeOfMeal,
+        protein = protein,
+        fats = fats,
         carbohydrates = carbohydrates
     )
 
@@ -102,7 +102,8 @@ class DayFoodService(
                 if (attempt < maxAttempts - 1) Thread.sleep(500L * (attempt + 1))
             } catch (e: Exception) {
                 if (e.message?.contains("Connection") == true ||
-                    e.message?.contains("Соединение") == true) {
+                    e.message?.contains("Соединение") == true
+                ) {
                     lastException = e
                     if (attempt < maxAttempts - 1) Thread.sleep(500L * (attempt + 1))
                 } else throw e

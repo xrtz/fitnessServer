@@ -32,7 +32,6 @@ data class User(
 )
 
 
-
 @Entity
 @Table(
     name = "day_food",
@@ -57,7 +56,6 @@ data class DayFood(
     @OneToMany(mappedBy = "dayFood", cascade = [CascadeType.ALL], orphanRemoval = true)
     var foodItems: MutableList<FoodItem> = mutableListOf()
 )
-
 
 
 @Entity

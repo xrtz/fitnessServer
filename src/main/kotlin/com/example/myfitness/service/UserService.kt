@@ -27,14 +27,14 @@ class UserService(
             val uid = UUID.randomUUID().toString()
             val user = userRepository.save(
                 User(
-                    firebaseUid  = uid,
-                    name         = request.name,
-                    email        = request.email,
+                    firebaseUid = uid,
+                    name = request.name,
+                    email = request.email,
                     passwordHash = passwordEncoder.encode(request.password),
-                    gender       = request.gender,
-                    weight       = request.weight,
-                    height       = request.height,
-                    target       = request.target
+                    gender = request.gender,
+                    weight = request.weight,
+                    height = request.height,
+                    target = request.target
                 )
             )
             AuthResponse(token = jwtService.generateToken(uid), user = user.toResponse())
@@ -63,9 +63,9 @@ class UserService(
         return withRetry {
             val user = userRepository.findByFirebaseUid(uid)
                 ?: throw NoSuchElementException("User not found: $uid")
-            user.name   = request.name
+            user.name = request.name
             user.gender = request.gender
-            user.email  = request.email
+            user.email = request.email
             user.weight = request.weight
             user.height = request.height
             user.target = request.target
@@ -75,12 +75,12 @@ class UserService(
 
     private fun User.toResponse() = UserResponse(
         firebaseUid = firebaseUid,
-        name        = name,
-        gender      = gender,
-        email       = email,
-        weight      = weight,
-        height      = height,
-        target      = target
+        name = name,
+        gender = gender,
+        email = email,
+        weight = weight,
+        height = height,
+        target = target
     )
 
     private fun <T> withRetry(maxAttempts: Int = 3, block: () -> T): T {
@@ -93,7 +93,8 @@ class UserService(
                 if (attempt < maxAttempts - 1) Thread.sleep(500L * (attempt + 1))
             } catch (e: Exception) {
                 if (e.message?.contains("Connection") == true ||
-                    e.message?.contains("Соединение") == true) {
+                    e.message?.contains("Соединение") == true
+                ) {
                     lastException = e
                     if (attempt < maxAttempts - 1) Thread.sleep(500L * (attempt + 1))
                 } else {
